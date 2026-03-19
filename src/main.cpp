@@ -16,7 +16,7 @@ struct Task {
 
 void printTasks(const vector<Task>& tasks) {
     if (tasks.empty()) {
-        cout << "La lista de tareas está vacía.\n";
+        cout << "La lista de tareas esta vacia.\n";
         return;
     }
 
@@ -83,13 +83,13 @@ void addTask(vector<Task>& tasks) {
 
     cout << "Ingrese el nombre de la tarea: ";
     if (!getline(cin, newTask.title) || newTask.title.empty()) {
-        cout << "Error: el nombre no puede estar vacío!\n";
+        cout << "Error: el nombre no puede estar vacio!\n";
         return;
     }
 
-    cout << "Ingrese la descripción de la tarea: ";
+    cout << "Ingrese la descripcion de la tarea: ";
     if (!getline(cin, newTask.description)) {
-        cout << "Error al ingresar la descripción!\n";
+        cout << "Error al ingresar la descripcion!\n";
         return;
     }
 
@@ -100,17 +100,17 @@ void addTask(vector<Task>& tasks) {
 
 void markTaskCompleted(vector<Task>& tasks) {
     if (tasks.empty()) {
-        cout << "La lista de tareas está vacía.\n";
+        cout << "La lista de tareas esta vacia.\n";
         return;
     }
 
     printTasks(tasks);
-    cout << "Ingrese el número de la tarea a completar: ";
+    cout << "Ingrese el numero de la tarea a completar: ";
     size_t index;
     if (!(cin >> index)) {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Error: ingrese un número válido!\n";
+        cout << "Error: ingrese un numero valido!\n";
         return;
     }
 
@@ -119,24 +119,24 @@ void markTaskCompleted(vector<Task>& tasks) {
         cout << "Tarea marcada como completada!\n";
     }
     else {
-        cout << "Número de tarea inválido!\n";
+        cout << "Numero de tarea invalido!\n";
     }
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
 void deleteTask(vector<Task>& tasks) {
     if (tasks.empty()) {
-        cout << "La lista de tareas está vacía.\n";
+        cout << "La lista de tareas esta vacia.\n";
         return;
     }
 
     printTasks(tasks);
-    cout << "Ingrese el número de la tarea a eliminar: ";
+    cout << "Ingrese el numero de la tarea a eliminar: ";
     size_t index;
     if (!(cin >> index)) {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Error: ingrese un número válido!\n";
+        cout << "Error: ingrese un numero valido!\n";
         return;
     }
 
@@ -145,7 +145,7 @@ void deleteTask(vector<Task>& tasks) {
         cout << "Tarea eliminada correctamente!\n";
     }
     else {
-        cout << "Número de tarea inválido!\n";
+        cout << "Numero de tarea invalido!\n";
     }
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
@@ -165,7 +165,8 @@ int main() {
              << "2. Agregar tarea\n"
              << "3. Marcar tarea como completada\n"
              << "4. Eliminar tarea\n"
-             << "5. Salir\n"
+             << "5. Limpiar todas las tareas\n";
+             << "6. Salir\n"
              << "Seleccione una opción: ";
 
         if (!(cin >> choice)) {
@@ -192,12 +193,16 @@ int main() {
                 saveTasksToFile(tasks, filename);
                 break;
             case 5:
+                tasks.clear();
+                cout << "Todas las tareas fueron eliminadas!\n";
+                break;
+            case 6:
                 cout << "Saliendo del programa...\n";
                 break;
             default:
                 cout << "Opción inválida! Intente nuevamente.\n";
         }
-    } while (choice != 5);
+    } while (choice != 6);
 
     return 0;
 }
