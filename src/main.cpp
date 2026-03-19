@@ -160,12 +160,12 @@ int main() {
     int choice;
 
     do {
-        cout << "\n=== GESTOR DE TAREAS ===\n"
+        cout << "\n=== SISTEMA DE LISTA DE TAREAS ===\n"
              << "1. Mostrar tareas\n"
              << "2. Agregar tarea\n"
              << "3. Marcar tarea como completada\n"
              << "4. Eliminar tarea\n"
-             << "5. Limpiar todas las tareas\n";
+             << "5. Limpiar todas las tareas\n"
              << "6. Salir\n"
              << "Seleccione una opción: ";
 
