@@ -16,11 +16,11 @@ struct Task {
 
 void printTasks(const vector<Task>& tasks) {
     if (tasks.empty()) {
-        cout << "Список задач пуст.\n";
+        cout << "La lista de tareas está vacía.\n";
         return;
     }
 
-    cout << "\nСписок задач:\n";
+    cout << "\nLista de tareas:\n";
     for (size_t i = 0; i < tasks.size(); ++i) {
         cout << i + 1 << ". "
              << "[" << (tasks[i].completed ? "X" : " ") << "] "
@@ -34,7 +34,6 @@ vector<Task> loadTasksFromFile(const string& filename) {
     ifstream file(filename, ios::binary);
 
     if (file.is_open()) {
-        // Пропускаем BOM для UTF-8
         if (file.get() != 0xEF || file.get() != 0xBB || file.get() != 0xBF) {
             file.seekg(0);
         }
@@ -54,7 +53,6 @@ vector<Task> loadTasksFromFile(const string& filename) {
             
             tasks.push_back(task);
             
-            // Пропускаем разделитель
             getline(file, line);
         }
         file.close();
@@ -65,7 +63,6 @@ vector<Task> loadTasksFromFile(const string& filename) {
 void saveTasksToFile(const vector<Task>& tasks, const string& filename) {
     ofstream file(filename, ios::binary | ios::trunc);
     if (file.is_open()) {
-        // Добавляем BOM для UTF-8
         file << "\xEF\xBB\xBF";
         
         for (const auto& task : tasks) {
@@ -76,7 +73,7 @@ void saveTasksToFile(const vector<Task>& tasks, const string& filename) {
         file.close();
     }
     else {
-        cerr << "Ошибка при сохранении задач!\n";
+        cerr << "Error al guardar las tareas!\n";
     }
 }
 
@@ -84,98 +81,97 @@ void addTask(vector<Task>& tasks) {
     Task newTask;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    cout << "Введите название задачи: ";
+    cout << "Ingrese el nombre de la tarea: ";
     if (!getline(cin, newTask.title) || newTask.title.empty()) {
-        cout << "Ошибка: название задачи не может быть пустым!\n";
+        cout << "Error: el nombre no puede estar vacío!\n";
         return;
     }
 
-    cout << "Введите описание задачи: ";
+    cout << "Ingrese la descripción de la tarea: ";
     if (!getline(cin, newTask.description)) {
-        cout << "Ошибка ввода описания!\n";
+        cout << "Error al ingresar la descripción!\n";
         return;
     }
 
     newTask.completed = false;
     tasks.push_back(newTask);
-    cout << "Задача успешно добавлена!\n";
+    cout << "Tarea agregada correctamente!\n";
 }
 
 void markTaskCompleted(vector<Task>& tasks) {
     if (tasks.empty()) {
-        cout << "Список задач пуст.\n";
+        cout << "La lista de tareas está vacía.\n";
         return;
     }
 
     printTasks(tasks);
-    cout << "Введите номер задачи для отметки: ";
+    cout << "Ingrese el número de la tarea a completar: ";
     size_t index;
     if (!(cin >> index)) {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Ошибка: введите число!\n";
+        cout << "Error: ingrese un número válido!\n";
         return;
     }
 
     if (index > 0 && index <= tasks.size()) {
         tasks[index - 1].completed = true;
-        cout << "Задача успешно отмечена как выполненная!\n";
+        cout << "Tarea marcada como completada!\n";
     }
     else {
-        cout << "Неверный номер задачи!\n";
+        cout << "Número de tarea inválido!\n";
     }
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
 void deleteTask(vector<Task>& tasks) {
     if (tasks.empty()) {
-        cout << "Список задач пуст.\n";
+        cout << "La lista de tareas está vacía.\n";
         return;
     }
 
     printTasks(tasks);
-    cout << "Введите номер задачи для удаления: ";
+    cout << "Ingrese el número de la tarea a eliminar: ";
     size_t index;
     if (!(cin >> index)) {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Ошибка: введите число!\n";
+        cout << "Error: ingrese un número válido!\n";
         return;
     }
 
     if (index > 0 && index <= tasks.size()) {
         tasks.erase(tasks.begin() + index - 1);
-        cout << "Задача успешно удалена!\n";
+        cout << "Tarea eliminada correctamente!\n";
     }
     else {
-        cout << "Неверный номер задачи!\n";
+        cout << "Número de tarea inválido!\n";
     }
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
 int main() {
-    // Настройки кодировки для Windows
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
-    system("chcp 65001 > nul");  // Принудительная установка UTF-8
+    system("chcp 65001 > nul");
 
     const string filename = "tasks.txt";
     vector<Task> tasks = loadTasksFromFile(filename);
     int choice;
 
     do {
-        cout << "\n=== Менеджер задач ===\n"
-             << "1. Показать задачи\n"
-             << "2. Добавить задачу\n"
-             << "3. Отметить задачу как выполненную\n"
-             << "4. Удалить задачу\n"
-             << "5. Выход\n"
-             << "Выберите действие: ";
+        cout << "\n=== GESTOR DE TAREAS ===\n"
+             << "1. Mostrar tareas\n"
+             << "2. Agregar tarea\n"
+             << "3. Marcar tarea como completada\n"
+             << "4. Eliminar tarea\n"
+             << "5. Salir\n"
+             << "Seleccione una opción: ";
 
         if (!(cin >> choice)) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Ошибка ввода! Попробуйте снова.\n";
+            cout << "Error de entrada! Intente nuevamente.\n";
             continue;
         }
 
@@ -196,10 +192,10 @@ int main() {
                 saveTasksToFile(tasks, filename);
                 break;
             case 5:
-                cout << "Выход из программы...\n";
+                cout << "Saliendo del programa...\n";
                 break;
             default:
-                cout << "Неверный выбор! Попробуйте снова.\n";
+                cout << "Opción inválida! Intente nuevamente.\n";
         }
     } while (choice != 5);
 
